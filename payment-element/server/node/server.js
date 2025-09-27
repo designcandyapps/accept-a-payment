@@ -5,6 +5,10 @@ const { resolve } = require('path');
 const env = require('dotenv').config({ path: './.env' });
 const calculateTax = false;
 
+const cors = require('cors');
+app.use(cors());
+
+
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY, {
   apiVersion: '2023-10-16',
   appInfo: { // For sample support and debugging, not required for production:
