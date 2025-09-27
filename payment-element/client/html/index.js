@@ -1,7 +1,8 @@
 document.addEventListener('DOMContentLoaded', async () => {
   // Load the publishable key from the server. The publishable key
   // is set in your .env file.
-  const {publishableKey} = await fetch('/config').then((r) => r.json());
+  const backendUrl = "https://accept-a-payment-backend.vercel.app";
+  const {publishableKey} = await fetch(`${backendUrl}/config`).then(r => r.json());
   if (!publishableKey) {
     addMessage(
       'No publishable key returned from the server. Please check `.env` and try again'
@@ -16,10 +17,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // On page load, we create a PaymentIntent on the server so that we have its clientSecret to
   // initialize the instance of Elements below. The PaymentIntent settings configure which payment
   // method types to display in the PaymentElement.
-  const {
-    error: backendError,
-    clientSecret
-  } = await fetch('/create-payment-intent').then(r => r.json());
+  const {error: backendError, clientSecret} = await fetch(`${backendUrl}/create-payment-intent`).then(r => r.json());
   if (backendError) {
     addMessage(backendError.message);
   }
